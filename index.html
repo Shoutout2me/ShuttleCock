@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배드민턴 셔틀콕 심층 비교: 요넥스 CW70 vs 빅터 NCS Max</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .tab-btn.active {
+            background-color: #1e293b;
+            color: #ffffff;
+            border-color: #1e293b;
+        }
+    </style>
+    <!-- Chosen Palette: Warm Neutrals with Brand Accents (Slate-50 for background, White for cards, Blue-600 for Yonex, Orange-600 for Victor to visually differentiate the two brands subtly without overwhelming the user). -->
+    <!-- Application Structure Plan: The SPA is structured into four logical sections for a guided exploration. 1. Introduction & Overview establishes context. 2. A Radar Chart provides a quick, high-level visual comparison of key metrics. 3. The "Detailed Comparison" section allows side-by-side reading of specific technical differences. 4. An interactive "Use Case Recommender" lets users self-select their situation to get a personalized verdict. This flow moves from general context to detailed data, ending with actionable advice. -->
+    <!-- Visualization & Content Choices: 1. Radar Chart (Chart.js) chosen to compare multi-dimensional attributes (Durability, Flight, etc.) simultaneously, providing an immediate visual profile of each shuttlecock. 2. Interactive Recommendation tool uses Vanilla JS to toggle content based on user needs, gamifying the buying advice. 3. Unicode icons used instead of SVG for visual anchors. NO SVG/Mermaid used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="text-slate-800 antialiased selection:bg-slate-200">
+
+    <main class="max-w-5xl mx-auto px-4 py-8 sm:py-12">
+        
+        <header class="text-center mb-12">
+            <div class="inline-block bg-slate-200 text-slate-700 px-3 py-1 rounded-full text-sm font-semibold mb-4 tracking-wide">
+                🏸 배드민턴 장비 분석 리포트
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-black mb-4 leading-tight">
+                인조 셔틀콕의 진화<br>
+                <span class="text-blue-600">요넥스 CW70</span> vs <span class="text-orange-600">빅터 NCS Max</span>
+            </h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                최근 천연 깃털 셔틀콕의 가격 상승과 공급 불안정으로 인해 고내구성 인조/하이브리드 셔틀콕이 대안으로 떠오르고 있습니다. 인조 셔틀콕 시장의 양대 산맥인 두 모델을 전격 비교합니다.
+            </p>
+        </header>
+
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold mb-2">제품 개요 및 설계 철학</h2>
+                <p class="text-slate-500">각 브랜드가 추구하는 기술적 방향성을 확인해보세요.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-[100px] -z-10"></div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-slate-900">Yonex<br><span class="text-blue-600 text-xl">Crosswind 70</span></h3>
+                        <div class="text-3xl">🌪️</div>
+                    </div>
+                    <div class="mb-4">
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded font-bold mr-2">소재</span>
+                        <span class="text-sm text-slate-700">특수 합성 수지 스커트 + 천연 코르크</span>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        기존 '마비스' 시리즈의 성공을 바탕으로, 공기 저항을 최적화한 <strong>크로스 구조의 윙(Wing)</strong> 설계가 핵심입니다. 인조 특유의 가벼운 느낌을 억제하고, 천연 깃털과 유사한 '회전력'과 '낙하 각도'를 구현하는 데 집중했습니다.
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 hover:shadow-md transition-shadow relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-orange-50 rounded-bl-[100px] -z-10"></div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-slate-900">Victor<br><span class="text-orange-600 text-xl">NCS Max</span></h3>
+                        <div class="text-3xl">🧬</div>
+                    </div>
+                    <div class="mb-4">
+                        <span class="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded font-bold mr-2">소재</span>
+                        <span class="text-sm text-slate-700">카본 섬유 프레임 + 합성 소재 깃 + 천연 코르크</span>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        <strong>'카본 깃대'</strong>라는 하이브리드 기술을 적용했습니다. 천연 깃털의 구조를 복제하되, 잘 부러지는 깃대를 카본으로 대체하여 극강의 내구성을 확보한 빅터의 최상위 테크니컬 모델입니다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-16 bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold mb-2">성능 프로파일 비교 (Radar)</h2>
+                <p class="text-slate-500">리포트의 평가를 수치화하여 다각도로 분석한 차트입니다. (100점 만점 기준)</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="performanceChart"></canvas>
+            </div>
+            
+            <div class="mt-6 flex flex-wrap justify-center gap-4 text-sm text-slate-600">
+                <div class="flex items-center"><span class="w-3 h-3 inline-block bg-blue-600 rounded-full mr-2"></span> 요넥스 CW70 (가성비 중심)</div>
+                <div class="flex items-center"><span class="w-3 h-3 inline-block bg-orange-600 rounded-full mr-2"></span> 빅터 NCS Max (퍼포먼스 중심)</div>
+            </div>
+        </section>
+
+        <section class="mb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold mb-2">항목별 상세 비교</h2>
+                <p class="text-slate-500">실제 경기에서 느껴지는 디테일한 차이를 확인하세요.</p>
+            </div>
+
+            <div class="space-y-4">
+                
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex items-center">
+                        <span class="text-2xl mr-3">🛡️</span>
+                        <h3 class="font-bold text-lg">내구성 (Durability)</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                        <div class="p-6">
+                            <div class="font-semibold text-blue-600 mb-2">요넥스 CW70</div>
+                            <p class="text-sm text-slate-600">합성 수지 일체형으로 깃 깨짐은 없으나, 오래 사용 시 스커트 변형(벌어짐)이 발생합니다.</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-semibold text-orange-600 mb-2">빅터 NCS Max</div>
+                            <p class="text-sm text-slate-600">카본 깃대가 충격을 흡수하여 매우 견고합니다. 깃 손상이 거의 없어 수명이 매우 깁니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex items-center">
+                        <span class="text-2xl mr-3">✈️</span>
+                        <h3 class="font-bold text-lg">비행 궤적 (Flight)</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                        <div class="p-6">
+                            <div class="font-semibold text-blue-600 mb-2">요넥스 CW70</div>
+                            <p class="text-sm text-slate-600">공기 저항 설계로 낙하 속도가 안정적이나, 비행 중반 이후 속도가 다소 급감하는 현상이 있습니다.</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-semibold text-orange-600 mb-2">빅터 NCS Max</div>
+                            <p class="text-sm text-slate-600">천연 깃털과 가장 흡사한 포물선 궤적을 보입니다. 카본 깃대의 강성 덕분에 회전 복원력이 뛰어납니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex items-center">
+                        <span class="text-2xl mr-3">🖐️</span>
+                        <h3 class="font-bold text-lg">타구감 (Hit Feel)</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                        <div class="p-6">
+                            <div class="font-semibold text-blue-600 mb-2">요넥스 CW70</div>
+                            <p class="text-sm text-slate-600">부드럽고 가벼운 타구감을 제공합니다. 라켓 면에 닿을 때의 충격이 적어 손목 부담이 덜합니다.</p>
+                        </div>
+                        <div class="p-6">
+                            <div class="font-semibold text-orange-600 mb-2">빅터 NCS Max</div>
+                            <p class="text-sm text-slate-600">천연 깃털 특유의 '탁' 끊어지는 묵직한 손맛이 있습니다. 카본 소재 특유의 반발력이 존재합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                    <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex items-center">
+                        <span class="text-2xl mr-3">🔊</span>
+                        <h3 class="font-bold text-lg">타구음 & 가격대</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                        <div class="p-6 space-y-4">
+                            <div>
+                                <div class="font-semibold text-blue-600 mb-1">요넥스 CW70</div>
+                                <p class="text-sm text-slate-600"><strong>소리:</strong> '텅' 하는 약간의 공명음이 섞인 인조적인 소리</p>
+                                <p class="text-sm text-slate-600 mt-1"><strong>가격:</strong> 상대적으로 저렴함 (경제성 강조)</p>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div>
+                                <div class="font-semibold text-orange-600 mb-1">빅터 NCS Max</div>
+                                <p class="text-sm text-slate-600"><strong>소리:</strong> 천연과 유사한 '퍽/착' 하는 경쾌하고 둔탁한 소리</p>
+                                <p class="text-sm text-slate-600 mt-1"><strong>가격:</strong> 하이엔드 기술 적용으로 인조 제품 중 고가 형성</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-16 bg-slate-900 text-white rounded-2xl p-6 md:p-10 shadow-lg">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold mb-2">나에게 맞는 셔틀콕 찾기</h2>
+                <p class="text-slate-400">주로 플레이하는 환경이나 목적을 선택하시면 최적의 제품을 추천해 드립니다.</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center gap-4 mb-8">
+                <button onclick="showRecommendation('caseA', this)" class="tab-btn active px-6 py-3 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 transition-colors font-semibold text-sm">
+                    🌱 입문자 및 레슨용
+                </button>
+                <button onclick="showRecommendation('caseB', this)" class="tab-btn px-6 py-3 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 transition-colors font-semibold text-sm">
+                    🏆 클럽 게임 / 중급자용
+                </button>
+                <button onclick="showRecommendation('caseC', this)" class="tab-btn px-6 py-3 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 transition-colors font-semibold text-sm">
+                    ❄️ 겨울철 및 야외 활동
+                </button>
+            </div>
+
+            <div id="recommendation-result" class="bg-slate-800 rounded-xl p-6 border border-slate-700 min-h-[150px] flex items-center justify-center transition-all duration-300">
+                <!-- Content injected via JS -->
+            </div>
+        </section>
+
+        <section class="border-t border-slate-200 pt-10 text-center">
+            <h2 class="text-2xl font-bold mb-6">최종 평가</h2>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-8 mb-8">
+                <div class="flex-1 max-w-sm mx-auto">
+                    <div class="text-4xl mb-2">⭐⭐⭐<span class="text-xl text-slate-400">☆☆</span></div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">요넥스 CW70 (3.5/5.0)</h3>
+                    <p class="text-sm text-slate-500 italic">"가성비와 안정성을 겸비한 표준 인조 셔틀콕"</p>
+                </div>
+                <div class="hidden md:block w-px bg-slate-200"></div>
+                <div class="flex-1 max-w-sm mx-auto">
+                    <div class="text-4xl mb-2">⭐⭐⭐⭐<span class="text-xl text-slate-400">☆</span></div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">빅터 NCS Max (4.5/5.0)</h3>
+                    <p class="text-sm text-slate-500 italic">"천연 깃털의 자리를 위협하는 현존 최강의 하이브리드 기술"</p>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg max-w-3xl mx-auto text-left shadow-sm">
+                <p class="text-lg text-slate-800 font-medium leading-relaxed">
+                    <span class="text-2xl mr-2 text-blue-600">"</span>
+                    비용 절감이 최우선이라면 <strong class="text-blue-700">요넥스 CW70</strong>을, 천연 깃털의 퍼포먼스를 유지하며 수명을 늘리고 싶다면 <strong class="text-orange-600">빅터 NCS Max</strong>를 선택하십시오.
+                    <span class="text-2xl ml-1 text-blue-600">"</span>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // 1. Chart.js Implementation for Radar Chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            // Setting default font for Chart.js
+            Chart.defaults.font.family = "'Noto Sans KR', sans-serif";
+            Chart.defaults.color = '#64748b';
+
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        '내구성 (수명)', 
+                        '비행 궤적 (천연 유사성)', 
+                        '타구감 (묵직함)', 
+                        '가격 경쟁력 (저렴함)', 
+                        '보관 및 날씨 저항성'
+                    ],
+                    datasets: [
+                        {
+                            label: '요넥스 CW70',
+                            data: [75, 70, 65, 95, 80],
+                            fill: true,
+                            backgroundColor: 'rgba(37, 99, 235, 0.2)', // Tailwind blue-600
+                            borderColor: 'rgba(37, 99, 235, 1)',
+                            pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(37, 99, 235, 1)',
+                            borderWidth: 2
+                        },
+                        {
+                            label: '빅터 NCS Max',
+                            data: [95, 90, 85, 50, 95],
+                            fill: true,
+                            backgroundColor: 'rgba(234, 88, 12, 0.2)', // Tailwind orange-600
+                            borderColor: 'rgba(234, 88, 12, 1)',
+                            pointBackgroundColor: 'rgba(234, 88, 12, 1)',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: 'rgba(234, 88, 12, 1)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(148, 163, 184, 0.2)'
+                            },
+                            grid: {
+                                color: 'rgba(148, 163, 184, 0.2)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 13,
+                                    weight: 'bold'
+                                }
+                            },
+                            ticks: {
+                                display: false,
+                                min: 0,
+                                max: 100,
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false // Using custom legend below chart
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + context.raw + '점';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Initialize Recommender
+            showRecommendation('caseA', document.querySelector('.tab-btn'));
+        });
+
+        // 2. Interactive Recommender Logic
+        const recommendationData = {
+            'caseA': {
+                tag: '입문자 및 레슨용',
+                winner: '요넥스 Crosswind 70',
+                winnerColor: 'text-blue-400',
+                reason: '초심자는 셔틀콕 깃을 빗맞히는 경우가 많습니다. 크로스윈드 70은 스커트가 유연하여 빗맞아도 복원력이 좋고, 가격 부담이 적어 다량의 셔틀콕을 소모하는 레슨 상황에 최적입니다.',
+                icon: '🏸'
+            },
+            'caseB': {
+                tag: '클럽 게임 및 중급자 경기용',
+                winner: '빅터 NCS Max',
+                winnerColor: 'text-orange-400',
+                reason: '경기 중 클리어, 스매시의 비거리가 정확해야 하는 중급자 이상에게는 NCS Max가 유리합니다. 특히 천연 깃털 셔틀콕과 이질감이 가장 적어, 공식 시합 전 연습용으로도 손색이 없습니다.',
+                icon: '🔥'
+            },
+            'caseC': {
+                tag: '겨울철 및 야외 활동',
+                winner: '빅터 NCS Max',
+                winnerColor: 'text-orange-400',
+                reason: '겨울철에는 기온이 낮아져 일반 인조 수지는 딱딱해지거나 깨질 수 있습니다. 카본 프레임을 사용하는 NCS Max는 환경 변화에 따른 물리적 변형이 적어 사계절 내내 안정적인 성능을 발휘합니다.',
+                icon: '❄️'
+            }
+        };
+
+        function showRecommendation(caseKey, btnElement) {
+            // Update button styles
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-slate-900');
+                btn.classList.add('bg-slate-800', 'text-white');
+            });
+            btnElement.classList.remove('bg-slate-800', 'text-white');
+            btnElement.classList.add('bg-white', 'text-slate-900');
+
+            // Get Data
+            const data = recommendationData[caseKey];
+            const resultContainer = document.getElementById('recommendation-result');
+
+            // Update Content with simple animation effect
+            resultContainer.style.opacity = '0';
+            
+            setTimeout(() => {
+                resultContainer.innerHTML = `
+                    <div class="text-left w-full max-w-3xl">
+                        <div class="flex items-center mb-3">
+                            <span class="text-3xl mr-4">${data.icon}</span>
+                            <div>
+                                <span class="text-xs font-bold tracking-wider text-slate-400 uppercase">${data.tag} 추천</span>
+                                <h3 class="text-2xl font-black ${data.winnerColor}">${data.winner}</h3>
+                            </div>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed text-sm md:text-base border-t border-slate-700 pt-3 mt-2">
+                            ${data.reason}
+                        </p>
+                    </div>
+                `;
+                resultContainer.style.opacity = '1';
+            }, 150);
+        }
+    </script>
+</body>
+</html>
